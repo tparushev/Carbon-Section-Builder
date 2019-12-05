@@ -10,7 +10,7 @@ interface Renderer {
 
 	public function get_sections();
 	
-	public function set_sections();
+	public function set_sections( $raw_sections );
 
 	public static function init( $type, $container_id = '' );
 }
