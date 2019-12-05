@@ -11,8 +11,12 @@ class Sections_Renderer implements Renderer {
 
 	public static function init( $type, $container_id = '' ) {
 		$renderer = new Self;
-
-		$raw_sections = carbon_get_the_post_meta( $type, $container_id );
+		
+		if ( is_array( $type ) ) {
+			$raw_sections = $type;
+		} else {
+			$raw_sections = carbon_get_the_post_meta( $type, $container_id );
+		}
 
 		if ( !$raw_sections ) {
 			return;
