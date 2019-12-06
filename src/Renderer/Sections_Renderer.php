@@ -35,9 +35,9 @@ class Sections_Renderer implements Renderer {
 		foreach ( $raw_sections as $raw_section ) {
 			$section = Base_Section::load( $raw_section[ '_type' ] );
 
-			$this->add_section( $section, $raw_section );
-
 			$section->renderer = $this;
+			
+			$this->add_section( $section, $raw_section );
 		}
 	}
 

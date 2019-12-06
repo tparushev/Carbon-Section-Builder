@@ -4,15 +4,41 @@ namespace Carbon_Section_Builder\Section;
 class Base_Section implements Section {
 	public $id = '';
 	public $name = '';
-	public $view_dir = '';
 	public $renderer = '';
+	private $view_dir = '';
 
 	function __construct() {
 		$this->set_name();
 		$this->id = self::encode_namespace();
+		$this->set_view_dir();
+	}
 
+	static public function get_section_namespace() {
+		return get_called_class();
+	}
+
+	private function set_view_dir() {
+		$this->view_dir = $this->get_view_dir();
+	}
+
+	public function get_view_dir() {
 		$reflection = new \ReflectionClass( self::decode_namespace( $this->id ) );
-		$this->view_dir = dirname( $reflection->getFileName() ) . DIRECTORY_SEPARATOR;
+
+		return dirname( $reflection->getFileName() ) . DIRECTORY_SEPARATOR;
+	}
+
+	public function get_view_file_name() {
+		$file_name = 'view.php';
+
+		if ( 
+			function_exists( 'is_amp_endpoint' ) && 
+			is_amp_endpoint() && 
+			file_exists( $this->view_dir . 'amp-view.php' ) 
+		) {
+			$file_name = 'amp-view.php';
+		}
+
+		return $file_name;
 	}
 
 	static public function make() {
@@ -36,12 +62,9 @@ class Base_Section implements Section {
 	public function render( $atts ) {
 		extract( $atts );
 
-		include( $this->view_dir . 'view.php' );
+		include( $this->view_dir . $this->get_view_file_name() );
 	}
 
-	static public function get_section_namespace() {
-		return get_called_class();
-	}
 
 	static public function encode_namespace() {
 		$namespace = str_replace( '\\', '__', self::get_section_namespace() ) ;
