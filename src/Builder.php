@@ -7,7 +7,7 @@ use Carbon_Fields\Field\Field;
  * Base Section Builder class 
  */
 class Builder {
-	const VERSION = '0.1.0';
+	const VERSION = '1.0.4';
 
 	public $container = null;
 

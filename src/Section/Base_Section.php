@@ -81,4 +81,10 @@ class Base_Section implements Section {
 			return strtoupper( str_replace( '-', '', $matches[ 0 ] ) );
 		}, $namespace );
 	}
+
+	public function change_name( $name ) {
+		$this->name = $name;
+
+		return $this;
+	}
 }
