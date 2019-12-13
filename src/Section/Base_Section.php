@@ -75,7 +75,7 @@ class Base_Section implements Section {
 	}
 
 	static public function decode_namespace( $type ) {
-		$namespace = str_replace( '__', DIRECTORY_SEPARATOR, $type ) ;
+		$namespace = str_replace( '__', '\\', $type ) ;
 
 		return preg_replace_callback( '/(-[a-z])/', function ( $matches ) {
 			return strtoupper( str_replace( '-', '', $matches[ 0 ] ) );
