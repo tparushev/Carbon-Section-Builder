@@ -13,6 +13,8 @@ class Base_Section implements Section {
 		$this->set_view_dir();
 	}
 
+	public function before_render() {}
+
 	static public function get_section_namespace() {
 		return get_called_class();
 	}
@@ -60,11 +62,12 @@ class Base_Section implements Section {
 	}
 
 	public function render( $atts ) {
+		$this->before_render();
+		
 		extract( $atts );
 
 		include( $this->view_dir . $this->get_view_file_name() );
 	}
-
 
 	static public function encode_namespace() {
 		$namespace = str_replace( '\\', '__', self::get_section_namespace() ) ;
