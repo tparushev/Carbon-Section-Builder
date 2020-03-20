@@ -69,6 +69,20 @@ class Base_Section implements Section {
 		include( $this->view_dir . $this->get_view_file_name() );
 	}
 
+	public function render_fragment( $fragment, $atts = array() ) {
+		$fragment_dir = $this->view_dir . "fragments" . DIRECTORY_SEPARATOR . $fragment . ".php";
+
+		if ( ! is_readable( $fragment_dir ) ) {
+			return;
+		}
+		
+		$atts[ 'this' ] = $this;
+
+		extract( $atts );
+
+		include( $fragment_dir );
+	}
+
 	static public function encode_namespace() {
 		$namespace = str_replace( '\\', '__', self::get_section_namespace() ) ;
 
