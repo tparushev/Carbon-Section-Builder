@@ -75,8 +75,6 @@ class Base_Section implements Section {
 		if ( ! is_readable( $fragment_dir ) ) {
 			return;
 		}
-		
-		$atts[ 'this' ] = $this;
 
 		extract( $atts );
 
